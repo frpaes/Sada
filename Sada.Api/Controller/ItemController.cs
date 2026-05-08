@@ -17,43 +17,163 @@ public class ItemController : ControllerBase
         _service = service;
     }
 
+    /// <summary>
+    /// Cria um novo item.
+    /// </summary>
     [HttpPost]
-    public async Task<IActionResult> Create(CreateItemDto dto)
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Create([FromBody] CreateItemDto item)
     {
-        var id = await _service.CreateAsync(dto);
+        try
+        {
+            var id =await _service.CreateAsync(item);
 
-        return Created("", id);
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id },
+                new
+                {
+                    Success = true,
+                    Message = "Registro criado com sucesso.",
+                    Id = id
+                });
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { Success = false, ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return UnprocessableEntity(new { Success = false, ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Success = false, ex.Message });
+        }
     }
 
+    /// <summary>
+    /// Lista os itens com filtros opcionais.
+    /// </summary>
+    /// <param name="status">
+    /// 1 = Pendente,
+    /// 2 = Em progresso,
+    /// 3 = Concluído
+    /// </param>
     [HttpGet]
-    public async Task<IActionResult> Get(Status? status, DateTime? DataVencimento)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Get(
+        Status? status,
+        DateTime? dataVencimento)
     {
-        var result = await _service.GetAsync(status, DataVencimento);
+        try
+        {
+            var result = await _service.GetAsync(status,dataVencimento);
 
-        return Ok(result);
+            return Ok(result);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new {Success = false,ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Success = false,ex.Message });
+        }
     }
 
+    /// <summary>
+    /// Busca item pelo Id.
+    /// </summary>
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var result = await _service.GetByIdAsync(id);
+        try { 
 
-        return Ok(result);
+            var result = await _service.GetByIdAsync(id);
+
+            return Ok(result);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { Success = false, ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Success = false, ex.Message });
+        }
     }
 
+    /// <summary>
+    /// Atualiza um item.
+    /// </summary>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, UpdateItemDto dto)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Update( Guid id, [FromBody] UpdateItemDto item)
     {
-        await _service.UpdateAsync(id, dto);
+        try
+        {
+            await _service.UpdateAsync(id, item);
 
-        return Ok();
+            return Ok(new { Success = true, Message = "Registro atualizado com sucesso." });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { Success = false, ex.Message });
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { Success = false,ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return UnprocessableEntity(new { Success = false, ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Success = false, ex.Message });
+        }
     }
 
+    /// <summary>
+    /// Remove um item.
+    /// </summary>
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(Guid id)
     {
-        await _service.DeleteAsync(id);
+        try {
+            
+            await _service.DeleteAsync(id);
 
-        return NoContent();
+            return Ok(new { Success = true, Message = "Registro excluído com sucesso." });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { Success = false, ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return UnprocessableEntity(new { Success = false, ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Success = false, ex.Message });
+        }
     }
 }

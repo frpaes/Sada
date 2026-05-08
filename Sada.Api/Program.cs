@@ -1,11 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+using Microsoft.VisualBasic;
 using Sada.Application.Interfaces;
 using Sada.Application.Service;
+using Sada.Domain.Enums;
 using Sada.Domain.Interfaces;
 using Sada.Infrastructure.Context;
 using Sada.Infrastructure.Repository;
 using System.Reflection;
+using static System.Net.WebRequestMethods;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,29 +31,38 @@ builder.Services.AddSwaggerGen(options =>
 
             API para gerenciamento de itens.
             -> Métodos
-
-            - Criar item
-            - Consultar itens
-            - Consultar item por Id
-            - Atualizar item
-            - Excluir item
+                - Criar item
+                - Consultar itens
+                - Consultar item por Id
+                - Atualizar item
+                - Excluir item
 
             -> Status disponíveis
-
-            Código / Descrição
-            1 = Pendente
-            2 = Em progresso
-            3 = Concluído
+                Código / Descrição
+                1 = Pendente
+                2 = Em progresso
+                3 = Concluído
 
             -> Exemplos
-
-            -> Criar item
-            {
-              ""title"": ""Estudar .NET"",
-              ""description"": ""Revisar Clean Architecture"",
-              ""dueDate"": ""2026-05-10"",
-              ""status"": 1
-            }"
+                - Busca todos os itens (podendo ser filtrados por status ou data)
+                - Busca por ID (guid)
+                - Criar item
+                {
+                  ""Titulo"": ""Cadastro item"",
+                  ""descricao"": ""Cadastro de item"",
+                  ""dataVencimento"": ""2026-05-10"",
+                  ""status"": 1
+                }
+                - Atualiza item
+                {
+                    ""Titulo"": ""Atualiza item"",
+                    ""descricao"": ""Atualizar os itens"",
+                    ""dataVenciomnto"": ""2026-05-10"",
+                    ""status"": 1
+                }
+                - Deleta registro pelo id(guid)
+            "
+                
     });
 
 });

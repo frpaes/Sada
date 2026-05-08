@@ -16,70 +16,77 @@ public class SadaService : ISadaService
         _repository = repository;
     }
 
-    public async Task<Guid> CreateAsync(CreateItemDto dto)
+    public async Task<Guid> CreateAsync(CreateItemDto itemDto)
     {
-        var entity = new Item(
-            dto.Title,
-            dto.Description,
-            dto.DueDate,
-            dto.Status);
+        var entity = new Item
+        {
+            Titulo = itemDto.Titulo,
+            Descricao = itemDto.Descricao,
+            DataVencimento = itemDto.DataVencimento,
+            Status = itemDto.Status
+        };
 
         await _repository.CreateAsync(entity);
 
         return entity.Id;
     }
 
-    public async Task<List<ResponseItemDto>> GetAsync(Status? status, DateTime? dueDate)
+    public async Task<List<ResponseItemDto>> GetAsync(Status? status, DateTime? DataVencimento)
     {
-        var list =
-            await _repository.GetAllAsync();
+        var list = await _repository.GetAllAsync();
 
         if (status.HasValue)
-            list = list
-                .Where(x => x.Status == status)
-                .ToList();
+            list = list.Where(x => x.Status == status).ToList();
 
-        if (dueDate.HasValue)
-            list = list
-                .Where(x => x.DueDate?.Date ==
-                            dueDate.Value.Date)
-                .ToList();
+        if (DataVencimento.HasValue)
+            list = list.Where(x => x.DataVencimento?.Date == DataVencimento.Value.Date).ToList();
 
         return list.Select(x =>
             new ResponseItemDto
             {
                 Id = x.Id,
-                Title = x.Title,
-                Description = x.Description,
-                DueDate = x.DueDate,
+                Titulo = x.Titulo,
+                Descricao = x.Descricao,
+                DataVencimento = x.DataVencimento,
                 Status = x.Status
             }).ToList();
     }
 
+    public async Task<ResponseItemDto> GetByIdAsync(Guid id)
+    {
+        var item = await _repository.GetByIdAsync(id);
+
+        if (item is null) throw new KeyNotFoundException("Registro não encontrado.");
+
+        return new ResponseItemDto
+        {
+            Id = item.Id,
+            Titulo = item.Titulo,
+            Descricao = item.Descricao,
+            DataVencimento = item.DataVencimento,
+            Status = item.Status
+        };
+    }
+
     public async Task UpdateAsync(Guid id, UpdateItemDto dto)
     {
-        var entity =
-            await _repository.GetByIdAsync(id);
+        var item = await _repository.GetByIdAsync(id);
 
-        if (entity == null)
-            throw new Exception("Registro não encontrado.");
+        if (item is null) throw new KeyNotFoundException("Registro não encontrado.");
 
-        entity.Update(
-            dto.Title,
-            dto.Description,
-            dto.DueDate,
-            dto.Status);
+        item.Titulo = dto.Titulo;
+        item.Descricao = dto.Descricao;
+        item.DataVencimento = dto.DataVencimento;
+        item.Status = dto.Status;
 
-        await _repository.UpdateAsync(entity);
+        await _repository.UpdateAsync(item);
     }
 
     public async Task DeleteAsync(Guid id)
     {
-        var entity =
-            await _repository.GetByIdAsync(id);
+        var entity = await _repository.GetByIdAsync(id);
 
-        if (entity == null)
-            throw new Exception("Registro não encontrado.");
+        if (entity == null) throw new Exception("Registro não encontrado.");
 
         await _repository.DeleteAsync(entity);
     }

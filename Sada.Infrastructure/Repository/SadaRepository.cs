@@ -15,13 +15,13 @@ public class SadaRepository : ISadaRepository
         _context = context;
     }
 
-    public async Task<Item> CreateAsync(Item entity)
+    public async Task<Item> CreateAsync(Item item)
     {
-        await _context.Itens.AddAsync(entity);
+        await _context.Itens.AddAsync(item);
 
         await _context.SaveChangesAsync();
 
-        return entity;
+        return item;
     }
 
     public async Task<List<Item>> GetAllAsync()
@@ -31,18 +31,19 @@ public class SadaRepository : ISadaRepository
       
     public async Task<Item?> GetByIdAsync(Guid id)
     {
-        return await _context.Itens
-            .FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.Itens.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task UpdateAsync(Item entity)
+    public async Task UpdateAsync(Item item)
     {
+        _context.Itens.Update(item);
+
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Item entity)
+    public async Task DeleteAsync(Item item)
     {
-        _context.Remove(entity);
+        _context.Remove(item);
 
         await _context.SaveChangesAsync();
     }

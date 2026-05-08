@@ -7,7 +7,9 @@ public interface ISadaService
 {
     Task<Guid> CreateAsync(CreateItemDto dto);
 
-    Task<List<ResponseItemDto>> GetAsync(Status? status, DateTime? dueDate);
+    Task<List<ResponseItemDto>> GetAsync(Status? status, DateTime? DataVencimento);
+
+    Task<ResponseItemDto> GetByIdAsync(Guid id);
 
     Task UpdateAsync(Guid id, UpdateItemDto dto);
 

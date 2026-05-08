@@ -9,11 +9,11 @@ namespace Sada.Application.DTOs
     {
         public Guid Id { get; set; }
 
-        public string Title { get; set; }
+        public string Titulo { get; set; }
 
-        public string? Description { get; set; }
+        public string? Descricao { get; set; }
 
-        public DateTime? DueDate { get; set; }
+        public DateTime? DataVencimento { get; set; }
 
         public Status Status { get; set; }
     }

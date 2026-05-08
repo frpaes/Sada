@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Sada.Api/Sada.Api.csproj" />
+  <Project Path="Sada.Application/Sada.Application.csproj" />
+  <Project Path="Sada.Domain/Sada.Domain.csproj" />
+  <Project Path="Sada.Infrastructure/Sada.Infrastructure.csproj" />
+  <Project Path="Sada.Tests/Sada.Tests.csproj" />
+</Solution>

@@ -47,4 +47,9 @@ public class SadaRepository : ISadaRepository
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task<List<Log>> GetLogs()
+    {
+        return await _context.ApiLogs.OrderByDescending(x => x.DataHora).ToListAsync();
+    }
 }

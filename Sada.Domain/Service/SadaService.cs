@@ -90,4 +90,20 @@ public class SadaService : ISadaService
 
         await _repository.DeleteAsync(entity);
     }
+
+    public async Task<List<ResponseLog>> GetLogsAsync()
+    {
+        var entity = await _repository.GetLogs();
+
+        if (entity == null) throw new Exception("Logs não encontrado.");
+
+        return entity.Select(x =>
+            new ResponseLog
+            {
+                Metodo = x.Metodo,
+                Endpoint = x.Endpoint,
+                StatusCode = x.StatusCode,
+                DataHora = x.DataHora
+            }).ToList();
+    }
 }

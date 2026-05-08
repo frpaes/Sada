@@ -12,4 +12,5 @@ public class SadaDbContext : DbContext
     }
 
     public DbSet<Item> Itens => Set<Item>();
+
 }

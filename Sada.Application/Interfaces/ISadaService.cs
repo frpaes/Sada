@@ -14,4 +14,6 @@ public interface ISadaService
     Task UpdateAsync(Guid id, UpdateItemDto dto);
 
     Task DeleteAsync(Guid id);
+
+    Task<List<ResponseLog>> GetLogsAsync();
 }

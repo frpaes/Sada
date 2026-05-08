@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Sada.Application.DTOs;
 using Sada.Application.Interfaces;
 using Sada.Domain.Enums;
+using System.Net.NetworkInformation;
 
 namespace Sada.Api.Controllers;
 
@@ -172,6 +174,28 @@ public class ItemController : ControllerBase
         catch (InvalidOperationException ex)
         {
             return UnprocessableEntity(new { Success = false, ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Success = false, ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// Busca todos os logs.
+    /// </summary>
+    [HttpGet("logs")]
+    public async Task<IActionResult> GetLogs()
+    {
+        try
+        {
+            var result = await _service.GetLogsAsync();
+
+            return Ok(result);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { Success = false, ex.Message });
         }
         catch (Exception ex)
         {

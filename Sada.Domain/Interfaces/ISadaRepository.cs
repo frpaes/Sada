@@ -1,4 +1,5 @@
 ﻿using Sada.Domain.Entities;
+using System.Collections;
 
 namespace Sada.Domain.Interfaces;
 
@@ -13,4 +14,6 @@ public interface ISadaRepository
     Task UpdateAsync(Item entity);
 
     Task DeleteAsync(Item entity);
+
+    Task<List<Log>> GetLogs();
 }

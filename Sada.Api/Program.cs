@@ -1,14 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
-using Microsoft.VisualBasic;
 using Sada.Application.Interfaces;
 using Sada.Application.Service;
-using Sada.Domain.Enums;
 using Sada.Domain.Interfaces;
 using Sada.Infrastructure.Context;
 using Sada.Infrastructure.Repository;
 using System.Reflection;
-using static System.Net.WebRequestMethods;
+using Sada.Api.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -72,14 +70,12 @@ builder.Services.AddDbContext<SadaDbContext>(x => x.UseInMemoryDatabase("SadaDb"
 
 builder.Services.AddScoped<ISadaRepository, SadaRepository>();
 builder.Services.AddScoped<ISadaService, SadaService>();
-
+builder.Services.AddScoped<ILogService, LogRepository>();
 
 var app = builder.Build();
-
+app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
-
-
 
 app.MapControllers();
 

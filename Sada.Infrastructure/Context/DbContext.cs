@@ -27,8 +27,7 @@ public class SadaDbContext : DbContext
                 StatusCode = (int)e.State,
                 Json = JsonSerializer.Serialize(e.Entity),
                 DataHora = DateTime.Now
-            })
-            .ToList();
+            }).ToList();
 
         var result = await base.SaveChangesAsync(cancellationToken);
 

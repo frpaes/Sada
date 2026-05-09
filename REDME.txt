@@ -1,4 +1,6 @@
         
+        Colocar como start do projeto o projeto "Sada.Api"
+
         Foi Utilizado banco in memory;
         Utizado guid ao inves de int identity por conta do banco em memoria, o int identity so funciona em banco real
 

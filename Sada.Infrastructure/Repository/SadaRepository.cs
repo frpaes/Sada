@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 using Sada.Domain.Entities;
 using Sada.Domain.Interfaces;
 using Sada.Infrastructure.Context;
@@ -50,6 +51,6 @@ public class SadaRepository : ISadaRepository
 
     public async Task<List<Log>> GetLogs()
     {
-        return await _context.ApiLogs.OrderByDescending(x => x.DataHora).ToListAsync();
+       return await _context.Logs.OrderByDescending(x => x.DataHora).ToListAsync();
     }
 }

@@ -4,9 +4,9 @@ public class Log
 {
     public int Id { get; set; }
 
-    public string Metodo { get; set; } = string.Empty;
+    public string Metodo { get; set; }
 
-    public string Endpoint { get; set; } = string.Empty;
+    public string Json { get; set; }
 
     public int StatusCode { get; set; }
 

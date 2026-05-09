@@ -25,8 +25,6 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Sada API",
         Version = "v1",
         Description = @"
-            # README
-
             API para gerenciamento de itens.
             -> Métodos
                 - Criar item
@@ -34,6 +32,7 @@ builder.Services.AddSwaggerGen(options =>
                 - Consultar item por Id
                 - Atualizar item
                 - Excluir item
+                - Consultar Logs
 
             -> Status disponíveis
                 Código / Descrição
@@ -59,6 +58,7 @@ builder.Services.AddSwaggerGen(options =>
                     ""status"": 1
                 }
                 - Deleta registro pelo id(guid)
+                - Busca todos os logs
             "
                 
     });
@@ -73,7 +73,7 @@ builder.Services.AddScoped<ISadaService, SadaService>();
 builder.Services.AddScoped<ILogService, LogRepository>();
 
 var app = builder.Build();
-app.UseMiddleware<RequestLoggingMiddleware>();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 

@@ -15,16 +15,17 @@ public class RequestLoggingMiddleware
 
     public async Task InvokeAsync(HttpContext context, ILogService logService)
     {
-        var watch = Stopwatch.StartNew();
-
         await _request(context);
 
-        watch.Stop();
+        var path = context.Request.Path.ToString();
+
+        if (!path.StartsWith("/api/itens"))
+            return;
 
         var log = new Log
         {
             Metodo = context.Request.Method,
-            Endpoint = context.Request.Path,
+            Json = path,
             StatusCode = context.Response.StatusCode,
             DataHora = DateTime.Now
         };

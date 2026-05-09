@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
 using Sada.Domain.Entities;
 using Sada.Domain.Interfaces;
 using Sada.Infrastructure.Context;
@@ -10,8 +9,7 @@ public class SadaRepository : ISadaRepository
 {
     private readonly SadaDbContext _context;
 
-    public SadaRepository(
-        SadaDbContext context)
+    public SadaRepository(SadaDbContext context)
     {
         _context = context;
     }

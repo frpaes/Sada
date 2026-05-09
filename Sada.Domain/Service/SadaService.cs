@@ -10,8 +10,7 @@ public class SadaService : ISadaService
 {
     private readonly ISadaRepository _repository;
 
-    public SadaService(
-        ISadaRepository repository)
+    public SadaService(ISadaRepository repository)
     {
         _repository = repository;
     }

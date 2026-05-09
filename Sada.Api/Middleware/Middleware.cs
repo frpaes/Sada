@@ -8,9 +8,9 @@ public class RequestLoggingMiddleware
 {
     private readonly RequestDelegate _request;
 
-    public RequestLoggingMiddleware(RequestDelegate next)
+    public RequestLoggingMiddleware(RequestDelegate request)
     {
-        _request = next;
+        _request = request;
     }
 
     public async Task InvokeAsync(HttpContext context, ILogService logService)

@@ -69,9 +69,7 @@ public class ItemController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> Get(
-        Status? status,
-        DateTime? dataVencimento)
+    public async Task<IActionResult> Get(Status? status, DateTime? dataVencimento)
     {
         try
         {

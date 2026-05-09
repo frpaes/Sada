@@ -1,0 +1,43 @@
+        
+        Foi Utilizado banco in memory;
+        Utizado guid ao inves de int identity por conta do banco em memoria, o int identity so funciona em banco real
+
+        swagger url -> https://localhost:7287/swagger/index.html        
+        
+        
+        API para gerenciamento de itens.
+        -> Métodos
+            - Criar item
+            - Consultar itens
+            - Consultar item por Id
+            - Atualizar item
+            - Excluir item
+            - Consultar Logs
+
+        -> Status disponíveis
+            Código / Descrição
+            1 = Pendente
+            2 = Em progresso
+            3 = Concluído
+
+        -> Exemplos
+            - Busca todos os itens (podendo ser filtrados por status ou data)
+            - Busca por ID (guid)
+            - Criar item
+            {
+              "Titulo": "Cadastro item",
+              "descricao": "Cadastro de item",
+              "dataVencimento": "2026-05-10",
+              "status": 1
+            }
+            - Atualiza item
+            {
+                "Titulo": "Atualiza item",
+                "descricao": "Atualizar os itens",
+                "dataVenciomnto": "2026-05-10",
+                "status": 1
+            }
+            - Deleta registro pelo id(guid)
+            - Busca todos os logs
+
+        Os registros modificados ficam gravados em logs e podem ser vistos no campo "Json"

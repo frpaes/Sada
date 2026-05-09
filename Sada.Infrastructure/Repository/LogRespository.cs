@@ -15,7 +15,7 @@ public class LogRepository : ILogService
 
     public async Task SalvarAsync(Log log)
     {
-        _context.ApiLogs.Add(log);
+        _context.Logs.Add(log);
 
         await _context.SaveChangesAsync();
     }

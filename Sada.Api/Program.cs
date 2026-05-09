@@ -73,7 +73,7 @@ builder.Services.AddScoped<ISadaService, SadaService>();
 builder.Services.AddScoped<ILogService, LogRepository>();
 
 var app = builder.Build();
-app.UseMiddleware<RequestLoggingMiddleware>();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 

@@ -26,9 +26,9 @@ public class SadaService : ISadaService
             Status = itemDto.Status
         };
 
-        await _repository.CreateAsync(entity);
+        var retorno = await _repository.CreateAsync(entity);
 
-        return entity.Id;
+        return retorno.Id;
     }
 
     public async Task<List<ResponseItemDto>> GetAsync(Status? status, DateTime? DataVencimento)
@@ -101,7 +101,7 @@ public class SadaService : ISadaService
             new ResponseLog
             {
                 Metodo = x.Metodo,
-                Endpoint = x.Endpoint,
+                Json = x.Json,
                 StatusCode = x.StatusCode,
                 DataHora = x.DataHora
             }).ToList();

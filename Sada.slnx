@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="REDME.txt" />
+  </Folder>
   <Project Path="Sada.Api/Sada.Api.csproj" />
   <Project Path="Sada.Application/Sada.Application.csproj" />
   <Project Path="Sada.Domain/Sada.Domain.csproj" />
